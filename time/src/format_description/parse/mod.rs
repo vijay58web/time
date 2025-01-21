@@ -75,14 +75,12 @@ pub fn parse_borrowed<const VERSION: usize>(
 /// [`OwnedFormatItem`]: crate::format_description::OwnedFormatItem
 pub fn parse_owned<const VERSION: usize>(
     s: &str,
-) -> Result<crate::format_description::OwnedFormatItem, crate::error::InvalidFormatDescription> {
+) -> Result<format_description::OwnedFormatItem, error::InvalidFormatDescription> {
     validate_version!(VERSION);
     let mut lexed = lexer::lex::<VERSION>(s.as_bytes());
     let ast = ast::parse::<_, VERSION>(&mut lexed);
     let format_items = format_item::parse(ast);
-    let items = format_items
-        .map(|res| res.map(Into::into))
-        .collect::<Result<Box<_>, _>>()?;
+    let items = format_items.collect::<Result<Box<_>, _>>()?;
     Ok(items.into())
 }
 
