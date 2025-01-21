@@ -75,7 +75,7 @@ pub fn parse_borrowed<const VERSION: usize>(
 /// [`OwnedFormatItem`]: crate::format_description::OwnedFormatItem
 pub fn parse_owned<const VERSION: usize>(
     s: &str,
-) -> Result<format_description::OwnedFormatItem, error::InvalidFormatDescription> {
+) -> Result<crate::format_description::OwnedFormatItem, crate::error::InvalidFormatDescription> {
     validate_version!(VERSION);
     let mut lexed = lexer::lex::<VERSION>(s.as_bytes());
     let ast = ast::parse::<_, VERSION>(&mut lexed);
